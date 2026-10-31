@@ -1,0 +1,14 @@
+{
+  "name": "sprint-cicd-demo",
+  "version": "1.0.0",
+  "description": "Safe, small GitHub Actions test repository for Sprint CI/CD end-to-end validation",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "build": "node scripts/build.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
