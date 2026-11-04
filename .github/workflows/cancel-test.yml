@@ -1,0 +1,22 @@
+name: Demo CI - Cancellation Test
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  cancellation-test:
+    name: Long-running cancellation test
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+
+    steps:
+      - name: Verify test setup
+        run: test 2 -eq 2
+
+      - name: Wait for cancellation
+        run: sleep 180
+
+      - name: Confirm normal completion
+        run: echo "Test completed without cancellation"
