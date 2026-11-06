@@ -1,46 +1,17 @@
-name: Demo CI - Build and Test
+
+name: Sprint Staging Rejection Probe
 
 on:
-  push:
-    branches: [main, 'demo/**']
-  pull_request:
   workflow_dispatch:
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
-  test:
-    name: Run automated tests
+  protected-staging:
+    name: Protected staging execution sentinel
     runs-on: ubuntu-latest
+    timeout-minutes: 1
+    environment: sprint-rejection-staging-20261106
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: npm
-      - name: Install dependencies
-        run: npm ci
-      - name: Run tests
-        run: npm test
-
-  build:
-    name: Build distributable and upload artifact
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: npm
-      - name: Install dependencies
-        run: npm ci
-      - name: Build static site
-        run: npm run build
-      - name: Upload built site artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: demo-build-${{ github.run_number }}
-          path: dist/
-          retention-days: 7
+      - name: Must never execute during rejection test
+        run: echo "SPRINT_REJECTION_PROBE_EXECUTED"
